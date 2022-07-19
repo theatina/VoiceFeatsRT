@@ -3,3 +3,13 @@ ___
 M.Sc. Language Technology
 
 M906 - Programming for Language Technology II (Sound Processing)
+
+
+
+
+
+___
+Instructions:
+
+1. run "Q1_train.py"
+2. 
