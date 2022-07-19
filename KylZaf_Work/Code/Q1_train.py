@@ -7,8 +7,9 @@ import os
 from sklearn.metrics import make_scorer
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.svm import SVC
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestClassifier, HistGradientBoostingClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LinearRegression, Lasso, ElasticNet, LogisticRegression, Ridge
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
@@ -33,14 +34,13 @@ class1_angry = df[ df['emotion'] == "angry" ]
 
 # %% isolate features and labels
 
-title = "MFCC Features + Centroid + Bandwidth"
+title = "MFCC Features"
+# title = "MFCC Features + Centroid + Bandwidth"
 print(f"\n{title}")
 subtitle = "Calm vs Angry"
 # isolate features and labels
 act01_features = np.vstack( class0_calm['mfcc_profile'].to_numpy() )
-act01_features = np.hstack( (act01_features, class0_calm['mean_centroid'].to_numpy().reshape(-1,1), class0_calm['std_centroid'].to_numpy().reshape(-1,1), class0_calm['mean_bandwidth'].to_numpy().reshape(-1,1), class0_calm['std_bandwidth'].to_numpy().reshape(-1,1) ))
 act02_features = np.vstack( class1_angry['mfcc_profile'].to_numpy() )
-act02_features = np.hstack( (act02_features, class1_angry['mean_centroid'].to_numpy().reshape(-1,1), class1_angry['std_centroid'].to_numpy().reshape(-1,1), class1_angry['mean_bandwidth'].to_numpy().reshape(-1,1), class1_angry['std_bandwidth'].to_numpy().reshape(-1,1) ))
 all_features = np.vstack((act01_features, act02_features))
 
 act01_labels = 0*np.ones( ( act01_features.shape[0] , 1 ) )
@@ -48,7 +48,7 @@ act02_labels = 1*np.ones( ( act02_features.shape[0] , 1 ) )
 all_labels = np.r_[ act01_labels , act02_labels ]
 
 # %% train - test split
-train_set , test_set = train_test_split( np.c_[ all_features , all_labels] , test_size=0.2 , random_state=99 )
+train_set , test_set = train_test_split( np.c_[ all_features , all_labels] , test_size=0.25 , random_state=99 )
 
 train_input = train_set[:, :-1]
 train_label = train_set[:, -1]
@@ -58,21 +58,28 @@ test_label = test_set[:, -1]
 # %% Classification algorithms
 
 # Data Scaling
+HistGB_scaler = StandardScaler()
 SVM_scaler = MinMaxScaler()
 RF_scaler = StandardScaler()
-LR_scaler = StandardScaler()
+LR_scaler = MinMaxScaler()
 
 # Classification algorithms and their parameters after manual fine-tuning and research
 class_algo_dict={
+    "HistGB_scaler":make_pipeline(HistGB_scaler, HistGradientBoostingClassifier()),
+    "HistGB": HistGradientBoostingClassifier(),
     "SVM": make_pipeline(SVM_scaler, SVC(C=1.0, kernel="rbf")),
     "RF": make_pipeline(RF_scaler, RandomForestClassifier(n_estimators=150, warm_start=True)),
-    "LR": make_pipeline(LR_scaler, LinearRegression())
-    
+    "LR": LinearRegression(),
+    "KNN": KNeighborsClassifier(n_neighbors=9, weights="distance"),
+    "LogReg": LogisticRegression(C=1000.0, solver="liblinear", penalty="l2", max_iter=1000)
 }
 
+# algo="HistGB"
 # algo="SVM"
-algo="RF"
+# algo="RF"
 # algo="LR"
+# algo="KNN"
+algo="LogReg"
 model = class_algo_dict[algo]
 
 model.fit( train_input , train_label )
