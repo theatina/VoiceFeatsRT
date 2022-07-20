@@ -31,7 +31,7 @@ def move_N_files_forEval(N):
                 ind = [ i for i in range(tot_files)]
         else:
                 # select N random files
-                ind = random.sample(range(tot_files), N)
+                ind = random.sample(range(tot_files), N+1)
         
         for f in [file_list[i] for i in ind]:
                 path_src = os.path.join(src,f)

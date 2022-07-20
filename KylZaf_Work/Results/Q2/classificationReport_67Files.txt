@@ -1,0 +1,12 @@
+File Number: 67
+
+              precision    recall  f1-score   support
+
+        Calm       0.66      0.90      0.76      4911
+       Angry       0.88      0.63      0.73      5977
+
+    accuracy                           0.75     10888
+   macro avg       0.77      0.76      0.75     10888
+weighted avg       0.78      0.75      0.75     10888
+
+

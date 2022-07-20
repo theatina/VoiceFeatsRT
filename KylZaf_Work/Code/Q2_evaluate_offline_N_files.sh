@@ -16,12 +16,24 @@ for entry in "$search_dir"/*; do
   files+=( "$entry" )
 done
 
+# progress bar
+model_eval=$'\nModel evaluation in progress '
+function printProgressBar() {
+    local progressBar="."
+    printf "%s" "${progressBar}"
+}
+
+printf "%s" "${model_eval}"
+
 # run the evaluation for all files to create the logfiles and scores_csv for the final step
 for f in "${files[@]}"; do
   python Q2_evaluate_offline_EvalNFiles.py $f
+  ((cnt++))
+  printProgressBar 
 done
 
+python -c 'import functions; functions.moveBack_files_forEval()'
+python -c 'import functions; functions.classif_report()'
 
-python -c 'import functions; functions.moveBack_files_forEval()';
-
-python -c 'import functions; functions.classif_report()';
+EvalStatus="Completed"
+printf " [%s]\n\n" "${EvalStatus}"

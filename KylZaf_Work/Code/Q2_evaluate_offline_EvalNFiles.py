@@ -56,7 +56,7 @@ if len(sys.argv)<2:
 else:
     filepath = sys.argv[1]
 
-print(f"Evaluating model {model_name} with file {filepath.split(os.sep)[-1]}")
+# print(f"Evaluating model {model_name} with file {filepath.split(os.sep)[-1]}")
 
 f = wave.open( filepath, 'rb' )
 
