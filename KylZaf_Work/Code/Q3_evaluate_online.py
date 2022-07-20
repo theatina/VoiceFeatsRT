@@ -40,7 +40,7 @@ win = np.hamming(WINDOW_SIZE)
 spec_img = np.zeros( ( WINDOW_SIZE//2 , FFT_FRAMES_IN_SPEC ) )
 # keep separate
 #  audio blocks, ready to be concatenated
-BLOCKS2KEEP = 10
+BLOCKS2KEEP = 20
 audio_blocks = []
 blocks_concatented = np.zeros( WINDOW_SIZE*BLOCKS2KEEP )
 
@@ -70,7 +70,7 @@ def callback( in_data, frame_count, time_info, status):
     if len(win) == len(n):
         frame_fft = np.fft.fft( win*n )
         p = np.abs( frame_fft )*2/np.sum(win)
-        fft_frame = 20*np.log10( p[ :WINDOW_SIZE//2 ] / (2**15) )
+        fft_frame = 20*np.log10( p[ :WINDOW_SIZE//2 ] / 32678 )
         spec_img = np.roll( spec_img , -1 , axis=1 )
         spec_img[:,-1] = fft_frame[::-1]
         # keep blocks

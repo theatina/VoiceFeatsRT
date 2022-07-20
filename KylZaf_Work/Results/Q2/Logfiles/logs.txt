@@ -1,0 +1,208 @@
+> 03-01-02-01-01-01-10.wav 
+Emotion: Calm | Part accuracy: 78.20%
+
+
+> 03-01-02-01-01-01-12.wav 
+Emotion: Calm | Part accuracy: 90.06%
+
+
+> 03-01-02-01-01-02-23.wav 
+Emotion: Calm | Part accuracy: 90.59%
+
+
+> 03-01-02-02-01-02-09.wav 
+Emotion: Calm | Part accuracy: 100.00%
+
+
+> 03-01-05-01-02-02-18.wav 
+Emotion: Angry | Part accuracy: 78.67%
+
+
+> 03-01-05-02-01-01-07.wav 
+Emotion: Angry | Part accuracy: 62.59%
+
+
+> 03-01-05-01-01-01-06.wav 
+Emotion: Angry | Part accuracy: 40.27%
+
+
+> 03-01-05-02-02-02-02.wav 
+Emotion: Angry | Part accuracy: 83.83%
+
+
+> 03-01-02-01-02-01-06.wav 
+Emotion: Calm | Part accuracy: 100.00%
+
+
+> 03-01-05-02-01-01-17.wav 
+Emotion: Angry | Window accuracy: 58.09%
+
+
+> 03-01-02-02-01-02-15.wav 
+Emotion: Calm | Window accuracy: 87.50%
+
+
+> 03-01-05-01-02-02-01.wav 
+Emotion: Angry | Window accuracy: 48.32%
+
+
+> 03-01-02-01-01-01-09.wav 
+Emotion: Calm | Window accuracy: 100.00%
+
+
+> 03-01-02-01-01-01-13.wav 
+Emotion: Calm | Window accuracy: 100.00%
+
+
+> 03-01-02-01-01-01-17.wav 
+Emotion: Calm | Window accuracy: 74.19%
+
+
+> 03-01-02-01-01-01-19.wav 
+Emotion: Calm | Window accuracy: 100.00%
+
+
+> 03-01-02-01-01-01-20.wav 
+Emotion: Calm | Window accuracy: 100.00%
+
+
+> 03-01-02-01-01-02-02.wav 
+Emotion: Calm | Window accuracy: 91.23%
+
+
+> 03-01-02-01-01-02-06.wav 
+Emotion: Calm | Window accuracy: 100.00%
+
+
+> 03-01-02-01-02-01-02.wav 
+Emotion: Calm | Window accuracy: 67.30%
+
+
+> 03-01-02-01-02-01-13.wav 
+Emotion: Calm | Window accuracy: 100.00%
+
+
+> 03-01-02-01-02-01-14.wav 
+Emotion: Calm | Window accuracy: 96.40%
+
+
+> 03-01-02-01-02-01-19.wav 
+Emotion: Calm | Window accuracy: 100.00%
+
+
+> 03-01-02-02-01-01-10.wav 
+Emotion: Calm | Window accuracy: 82.35%
+
+
+> 03-01-02-02-01-01-11.wav 
+Emotion: Calm | Window accuracy: 100.00%
+
+
+> 03-01-02-02-01-01-12.wav 
+Emotion: Calm | Window accuracy: 96.64%
+
+
+> 03-01-02-02-01-01-24.wav 
+Emotion: Calm | Window accuracy: 70.35%
+
+
+> 03-01-02-02-01-02-10.wav 
+Emotion: Calm | Window accuracy: 83.78%
+
+
+> 03-01-02-02-01-02-14.wav 
+Emotion: Calm | Window accuracy: 100.00%
+
+
+> 03-01-02-02-01-02-24.wav 
+Emotion: Calm | Window accuracy: 96.60%
+
+
+> 03-01-02-02-02-01-04.wav 
+Emotion: Calm | Window accuracy: 91.47%
+
+
+> 03-01-02-02-02-01-06.wav 
+Emotion: Calm | Window accuracy: 95.39%
+
+
+> 03-01-02-02-02-01-16.wav 
+Emotion: Calm | Window accuracy: 76.73%
+
+
+> 03-01-02-02-02-01-17.wav 
+Emotion: Calm | Window accuracy: 66.21%
+
+
+> 03-01-02-02-02-01-20.wav 
+Emotion: Calm | Window accuracy: 100.00%
+
+
+> 03-01-02-02-02-02-19.wav 
+Emotion: Calm | Window accuracy: 100.00%
+
+
+> 03-01-05-01-01-01-11.wav 
+Emotion: Angry | Window accuracy: 40.97%
+
+
+> 03-01-05-01-01-01-12.wav 
+Emotion: Angry | Window accuracy: 37.43%
+
+
+> 03-01-05-01-01-01-19.wav 
+Emotion: Angry | Window accuracy: 38.36%
+
+
+> 03-01-05-01-01-02-15.wav 
+Emotion: Angry | Window accuracy: 77.54%
+
+
+> 03-01-05-01-01-02-22.wav 
+Emotion: Angry | Window accuracy: 18.71%
+
+
+> 03-01-05-01-02-01-01.wav 
+Emotion: Angry | Window accuracy: 46.27%
+
+
+> 03-01-05-01-02-01-04.wav 
+Emotion: Angry | Window accuracy: 52.86%
+
+
+> 03-01-05-01-02-01-06.wav 
+Emotion: Angry | Window accuracy: 61.49%
+
+
+> 03-01-05-01-02-01-19.wav 
+Emotion: Angry | Window accuracy: 27.42%
+
+
+> 03-01-05-01-02-02-10.wav 
+Emotion: Angry | Window accuracy: 80.84%
+
+
+> 03-01-05-01-02-02-11.wav 
+Emotion: Angry | Window accuracy: 49.32%
+
+
+> 03-01-05-01-02-02-19.wav 
+Emotion: Angry | Window accuracy: 31.88%
+
+
+> 03-01-05-01-02-02-24.wav 
+Emotion: Angry | Window accuracy: 82.94%
+
+
+> 03-01-05-02-01-01-07.wav 
+Emotion: Angry | Window accuracy: 58.82%
+
+
+> 03-01-05-02-01-01-12.wav 
+Emotion: Angry | Window accuracy: 64.49%
+
+
+> 03-01-05-02-01-01-13.wav 
+Emotion: Angry | Window accuracy: 77.85%
+
+

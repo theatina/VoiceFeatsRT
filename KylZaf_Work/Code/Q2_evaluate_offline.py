@@ -6,10 +6,13 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 from time import sleep
 import pickle
+import sys
 import os
 import pandas as pd
 
 from sklearn.preprocessing import StandardScaler
+
+import functions as funs
 
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -20,14 +23,14 @@ import audio_representation as au
 plt.ion() 
 
 algo="LogReg"
-filename = f'..{os.sep}Models{os.sep}{algo}_CalmAngry.model'
+model_name = f"{algo}_CalmAngry"
+filename = f'..{os.sep}Models{os.sep}{model_name}.model'
 model = pickle.load(open(filename, 'rb'))
 
 
 WINDOW_SIZE = 2048
-CHANNELS = 1
+CHANNELS = 2
 RATE = 44100
-
 FFT_FRAMES_IN_SPEC = 20
 
 # global
@@ -38,7 +41,7 @@ win = np.hamming(WINDOW_SIZE)
 spec_img = np.zeros( ( WINDOW_SIZE//2 , FFT_FRAMES_IN_SPEC ) )
 # keep separate
 #  audio blocks, ready to be concatenated
-BLOCKS2KEEP = 10
+BLOCKS2KEEP = 20
 audio_blocks = []
 blocks_concatented = np.zeros( WINDOW_SIZE*BLOCKS2KEEP )
 
@@ -47,10 +50,14 @@ au_manager = au.AudioRepresentation()
 #------------------------------------------------------------------------------------
 
 
-f = wave.open( f'..{os.sep}Data{os.sep}AudioFiles{os.sep}Angry_3rd_05{os.sep}03-01-05-02-02-01-01.wav', 'rb' )
-# f = wave.open( f'..{os.sep}Data{os.sep}AudioFiles{os.sep}Angry_3rd_05{os.sep}03-01-05-02-02-01-18.wav', 'rb' )
-# f = wave.open( f'..{os.sep}Data{os.sep}AudioFiles{os.sep}Calm_3rd_02{os.sep}03-01-02-02-02-01-03.wav', 'rb' )
-# f = wave.open( f'..{os.sep}Data{os.sep}AudioFiles{os.sep}Calm_3rd_02{os.sep}03-01-02-02-02-01-22.wav', 'rb' )
+if len(sys.argv)<2:
+    filepath = f'..{os.sep}Data{os.sep}AudioFiles{os.sep}Angry_3rd_05{os.sep}03-01-05-02-02-01-01.wav'
+else:
+    filepath = sys.argv[1]
+
+print(f"\nEvaluating model {model_name} with file {filepath}\n")
+
+f = wave.open( filepath, 'rb' )
 
 
 # %% call back with global
@@ -68,7 +75,7 @@ def callback( in_data, frame_count, time_info, status):
     if len(win) == len(n):
         frame_fft = np.fft.fft( win*n )
         p = np.abs( frame_fft )*2/np.sum(win)
-        fft_frame = 20*np.log10( p[ :WINDOW_SIZE//2 ] / (2**15) )
+        fft_frame = 20*np.log10( p[ :WINDOW_SIZE//2 ] / 32678 )
         spec_img = np.roll( spec_img , -1 , axis=1 )
         spec_img[:,-1] = fft_frame[::-1]
         # keep blocks
@@ -89,7 +96,10 @@ output = p.open(format=pyaudio.paInt16,
 output.start_stream()
 
 fig = plt.figure(figsize=(12,8))
+
 # after starting, check when n empties (file ends) and stop
+predictions = []
+
 while len(global_block) == WINDOW_SIZE*2:
     # plt.clf()
     # plt.imshow( spec_img , aspect='auto' )
@@ -104,7 +114,7 @@ while len(global_block) == WINDOW_SIZE*2:
         # make predictions from training data
         preds = model.predict( X_in )
 
-        print(repr(preds[0]))
+        # print(repr(preds[0]))
 
         plt.clf()
         ax1 = fig.add_subplot(211)
@@ -113,13 +123,31 @@ while len(global_block) == WINDOW_SIZE*2:
         ax2 = fig.add_subplot(212)
         # interpolation = ["hanning", "nearest"] | cmap = ["twilight", "ocean"]
         ax2.imshow(au_manager.usefull_mfcc_normalised,  interpolation='hanning', cmap=cm.twilight,  origin='lower')        
+        
         title_text = 'Calm'
         if (preds[0] > 0.5):
             title_text = 'Angry'
+            predictions.append(1)
+        else: 
+            predictions.append(0)
 
         fig.suptitle(title_text, fontsize=16)
+
+        # while evaluating -> not showing the mfcc figures
         plt.show()
+
+
     plt.pause(0.01)
 
 print('stopping audio')
 output.stop_stream()
+
+filename = filepath.split(os.sep)[-1]
+# Class0 - calm: 02 | Class1 - angry: 05
+emotion = int(filename.split("-")[2])
+parts = len(predictions)
+true_labels = [ 0 if emotion==2 else 1 for i in range(parts)  ]
+
+emotion_str = "Calm" if emotion==2 else "Angry"
+
+funs.evaluation(parts, predictions, true_labels, emotion_str, filename)

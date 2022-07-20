@@ -16,21 +16,13 @@ MFCCs -> είχε καλύτερα αποτελέσματα με όλα μαζί
 
 
 _____________________________________________________
-Exercise 2 -
+Exercise 2 - Done
 -----------------------------------------------------
 
 "Αξιολογήστε το μοντέλο που αποθηκεύσατε παραπάνω σε λειτουργεία πραγματικού χρόνου, αλλά με τον
 ήχο να προέρχεται από δεδομένα αρχείων ήχου (για έλεγχο σε "εργαστηριακές συνθήκες"). Είναι δική σας
 επιλογή το σε πόσα αρχεία θα το αξιολογήσετε και τι μετρική θα χρησιμοποιήσετε (π.χ. θα αξιολογείτε την
 αποτελεσματικότητα σε παράθυρα χρόνο ή θα αξιολογείτε στο σύνολο του αρχείου;)."
-
-
-______
-TODO :
-------
-Πώς θα κάνουμε αξιολόγηση; στο σύνολο ή στο κάθε παράθυρο?!
-Ideas? 
-note: λόγω παύσεων είναι biased οπότε μπορούμε να καθαρίσουμε τα αρχεία και να τρέξουμε πολλά!! 
 
 
 
@@ -63,5 +55,8 @@ ______
 TODO :
 ------
 
-notes: data scaling, normalization/regularization, data cleaning, sound cleaning, more data recorded in the same lab conditions (some audio files are lower in db than other)
-( θα χρειαστεί google αυτό, δεν το χω =Ρ )
+Notes
+1. data scaling (normalization/regularization)
+2. data cleaning, sound cleaning
+3. more data recorded in the same lab conditions (some audio files are lower in db than other)
+4. feature extraction (more features depending on the task) 
