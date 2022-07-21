@@ -13,12 +13,15 @@ def present_scores( s , algorithm='method' ):
         print('mean: ' + str( np.mean(s) ))
         print('std: ' + str( np.std(s) ))
         print('median: ' + str( np.median(s) ))
+        print("\n")
+
 
 def binary_accuracy( y_true , y_pred ):
         bin_pred = np.array( y_pred >= 0.5 ).astype(int)
         return np.sum( y_true == bin_pred ) / y_true.size
 
 
+# randomly choose N files from the audio files directory (src) and move them to the evaluation directory (dst)
 def move_N_files_forEval(N):
         src = f"..{os.sep}Data{os.sep}AudioFiles"
         dst = os.path.join(f"..{os.sep}Data{os.sep}AudioFiles", "Temp_Evaluation")
@@ -39,6 +42,7 @@ def move_N_files_forEval(N):
                 shutil.move(path_src, path_dest)
 
 
+# move the audio files from the evaluation directory back to the audio files directory for next evaluation runs
 def moveBack_files_forEval():
         dst = f"..{os.sep}Data{os.sep}AudioFiles"
         src = os.path.join(f"..{os.sep}Data{os.sep}AudioFiles", "Temp_Evaluation")
@@ -52,11 +56,13 @@ def moveBack_files_forEval():
                 shutil.move(path_src, path_dest)
         
 
+# create a .csv file to store all the window scores from files 
 def create_csv_scores():
         df = pd.DataFrame([],columns=["Prediction", "Label", "Filename"])
         df.to_csv(f"..{os.sep}Results{os.sep}Q2{os.sep}Scores.csv", index=False, header=True)
 
 
+# evaluate classifier and store results to the .txt and .csv files
 def evaluation(n_parts, preds, true, emotion, filename, scores_csv=f"..{os.sep}Results{os.sep}Q2{os.sep}Scores.csv"):
         logfiledir = f"..{os.sep}Results{os.sep}Q2{os.sep}Logfiles"
         with open(scores_csv, "a", newline="") as csv_scores:
@@ -72,6 +78,7 @@ def evaluation(n_parts, preds, true, emotion, filename, scores_csv=f"..{os.sep}R
                 writer.write(logfile_str)
 
 
+# create and print/store the classification report for the total of the files' windows (counts the files used for evaluation)
 def classif_report():
         scores_csv=f"..{os.sep}Results{os.sep}Q2{os.sep}Scores.csv"
         scores_df=pd.read_csv(scores_csv)
@@ -89,5 +96,5 @@ def classif_report():
                 writer.write(logfile_str)
 
 
-
+# .csv init
 # create_csv_scores()

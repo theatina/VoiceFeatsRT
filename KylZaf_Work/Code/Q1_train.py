@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pickle
 import os
+import sys
 
 from sklearn.metrics import make_scorer
 from sklearn.model_selection import train_test_split, cross_val_score
@@ -27,18 +28,16 @@ else:
     df["mfcc_profile"]= [ eval(mfcc_prof) for mfcc_prof in df["mfcc_profile"].values ]
 
 
-# %% calm - angry
-
+# %% 
+# Choose the two classes: 
+# class 0 -> calm | class 1 -> angry
 class0_calm = df[ df['emotion'] == "calm" ]
 class1_angry = df[ df['emotion'] == "angry" ]
 
 # %% isolate features and labels
-
 title = "MFCC Features"
-# title = "MFCC Features + Centroid + Bandwidth"
 print(f"\n{title}")
 subtitle = "Calm vs Angry"
-# isolate features and labels
 act01_features = np.vstack( class0_calm['mfcc_profile'].to_numpy() )
 act02_features = np.vstack( class1_angry['mfcc_profile'].to_numpy() )
 all_features = np.vstack((act01_features, act02_features))
@@ -58,14 +57,12 @@ test_label = test_set[:, -1]
 # %% Classification algorithms
 
 # Data Scaling
-HistGB_scaler = StandardScaler()
 SVM_scaler = MinMaxScaler()
 RF_scaler = StandardScaler()
-LR_scaler = MinMaxScaler()
+LR_scaler = StandardScaler()
 
 # Classification algorithms and their parameters after manual fine-tuning and research
 class_algo_dict={
-    "HistGB_scaler":make_pipeline(HistGB_scaler, HistGradientBoostingClassifier()),
     "HistGB": HistGradientBoostingClassifier(),
     "SVM": make_pipeline(SVM_scaler, SVC(C=1.0, kernel="rbf")),
     "RF": make_pipeline(RF_scaler, RandomForestClassifier(n_estimators=150, warm_start=True)),
@@ -74,14 +71,20 @@ class_algo_dict={
     "LogReg": LogisticRegression(C=1000.0, solver="liblinear", penalty="l2", max_iter=1000)
 }
 
+
 # algo="HistGB"
 # algo="SVM"
 # algo="RF"
 # algo="LR"
 # algo="KNN"
 algo="LogReg"
+
+if len(sys.argv)>1:
+    algo= sys.argv[1]
+
 model = class_algo_dict[algo]
 
+# train classifier
 model.fit( train_input , train_label )
 # make predictions from training data
 preds_binary = model.predict( test_input )
@@ -94,7 +97,9 @@ my_scorer = make_scorer(funs.binary_accuracy, greater_is_better=True)
 # %% cross validation
 scores = cross_val_score( model, all_features, all_labels.ravel(), scoring=my_scorer, cv=10 )
 
+# print scores
 funs.present_scores( scores , algorithm=algo )
+
 # %% save model
 filename = f'..{os.sep}Models{os.sep}{algo}_CalmAngry.model'
 pickle.dump(model, open(filename, 'wb'))
